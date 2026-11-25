@@ -1,0 +1,42 @@
+/* Fonts measured on the reference: Cinzel (details), Cormorant Garamond (display numerals),
+   Bickham Script Pro (script — licensed; Pinyon Script is the free fallback).
+   Fonts are self-hosted via @fontsource (imported in main.tsx) so the site works offline. */
+
+/* Free fallback for Bickham Script Pro, metric-calibrated so it occupies the same width. */
+@font-face {
+  font-family: 'Script Fallback';
+  src: url('../assets/fonts/pinyon-script-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 74%;
+}
+
+:root {
+  /* Palette (exact values from the reference stylesheet) */
+  --paper: oklch(96.5% 0.027 90);
+  --ink: oklch(29% 0.022 70);
+  --olive: oklch(43% 0.055 112);
+  --gold: oklch(74% 0.12 81);
+  --gold-deep: oklch(51% 0.105 75);
+  --date-ink: oklch(43% 0.08 57);
+  --date-center: oklch(93% 0.038 83);
+  --date-edge: oklch(72% 0.064 72);
+  --rose: oklch(47% 0.13 14);
+  --ivory: oklch(97% 0.02 85);
+
+  /* Type */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-details: 'Cinzel', Georgia, serif;
+  --font-script: 'Bickham Script Pro', 'Script Fallback', cursive;
+  --font-body: 'Montserrat', system-ui, sans-serif;
+
+  /* Layout */
+  --column: 540px;
+  --stage-blend: 104px;
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-duration: 0.7s;
+  --motion-stagger: 90ms;
+}

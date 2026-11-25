@@ -1,0 +1,163 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+img,
+video,
+canvas,
+svg {
+  display: block;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold-deep);
+  outline-offset: 3px;
+}
+
+/* ───────── Shell: full-viewport scroll container with tiled paper ───────── */
+.invitation-shell {
+  height: 100svh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  background-color: var(--paper);
+  background-image: var(--shell-bg);
+  background-repeat: repeat;
+  background-size: var(--shell-tile);
+  background-attachment: local;
+}
+
+/* ───────── The 540px phone column stage ───────── */
+.invitation-stage {
+  position: relative;
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--column);
+  height: 100svh;
+  max-height: 960px;
+  min-height: 560px;
+  overflow: hidden;
+}
+
+.stage-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Box that matches an object-fit:cover 9:16 frame inside a stage */
+.cover-box-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  container-type: size;
+  pointer-events: none;
+}
+.cover-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100cqw, 56.25cqh);
+  height: max(100cqh, 177.7778cqw);
+  translate: -50% -50%; /* independent of `transform`, so children/variants can animate freely */
+  container-type: inline-size;
+}
+
+/* ───────── Staggered reveal system (reference timings) ───────── */
+.motion-item {
+  opacity: 0;
+  filter: blur(1.5px);
+  transform: translateY(14px);
+  transition:
+    opacity var(--motion-duration) var(--ease-out-soft),
+    transform var(--motion-duration) var(--ease-out-soft),
+    filter var(--motion-duration) var(--ease-out-soft);
+  transition-delay: calc(var(--motion-order, 0) * var(--motion-stagger));
+}
+.motion-sequence.is-visible .motion-item {
+  opacity: 1;
+  filter: none;
+  transform: translateY(0);
+}
+.motion-title {
+  transform: translateY(20px) scale(0.98);
+}
+.motion-sequence.is-visible .motion-title {
+  transform: translateY(0) scale(1);
+}
+
+/* No-JS safety: never leave copy permanently hidden */
+@media (scripting: none) {
+  .motion-item {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
+
+/* ───────── Music toggle ───────── */
+.music-toggle {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklch, var(--gold-deep) 45%, transparent);
+  background: color-mix(in oklch, var(--paper) 85%, transparent);
+  color: var(--gold-deep);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  backdrop-filter: blur(4px);
+  transition: transform 0.18s, background-color 0.18s;
+}
+.music-toggle:hover {
+  background: var(--paper);
+}
+.music-toggle:active {
+  transform: scale(0.94);
+}
+.music-toggle svg {
+  width: 16px;
+  height: 16px;
+}
